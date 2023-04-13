@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -15,11 +16,13 @@ public class UserStore {
     }
 
 
-    public Person findByUsername(String username) {
-        return users.get(username);
+    public Optional<Person> findByUsername(String username) {
+        return Optional.ofNullable(users.get(username));
     }
 
     public List<Person> findAll() {
         return new ArrayList<>(users.values());
     }
+
+
 }
