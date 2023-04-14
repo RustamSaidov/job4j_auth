@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static ru.job4j.url.JWTAuthenticationFilter.HEADER_STRING;
-import static ru.job4j.url.JWTAuthenticationFilter.SECRET;
-import static ru.job4j.url.JWTAuthenticationFilter.TOKEN_PREFIX;
+import static ru.job4j.url.JWTAuthenticationFilter.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
