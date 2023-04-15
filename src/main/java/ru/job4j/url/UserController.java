@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -90,5 +91,16 @@ public class UserController {
                 ));
         return ResponseEntity.of(Optional.of(user));
 
+    }
+
+    /*Пример использования PATCH метода для частичного обновления данных:*/
+    @PatchMapping("/change-user")
+    public Person changePersonUsingPatchMethod(@RequestBody Person person) throws InvocationTargetException, IllegalAccessException {
+        var current = users.findByUsername(person.getUsername());
+        if (current.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        users.save(person);
+        return users.findByUsername(person.getUsername()).get();
     }
 }
