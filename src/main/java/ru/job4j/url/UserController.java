@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -41,10 +43,20 @@ public class UserController {
         users.save(person);
     }
 
+    /*
     @GetMapping("/all")
     public List<Person> findAll() {
         return users.findAll();
     }
+
+     */
+
+    /*GET с использованием ResponseEntity:*/
+    @GetMapping("/all")
+    public ResponseEntity<List<Person>> example2() {
+        return ResponseEntity.of(Optional.of(users.findAll()));
+    }
+
 
     @ExceptionHandler(value = {IllegalArgumentException.class})
     public void exceptionHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -59,6 +71,7 @@ public class UserController {
         LOGGER.error(e.getLocalizedMessage());
     }
 
+/*
     @GetMapping
     public Person findByUsername(@RequestParam String username) {
         return users.findByUsername(username)
@@ -66,5 +79,16 @@ public class UserController {
                         HttpStatus.NOT_FOUND, "Account is not found. Please, check requisites!!!!!!!!!"
                 ));
     }
+ */
 
+    /*GET с использованием ResponseEntity:*/
+    @GetMapping
+    public ResponseEntity<Person> findByUsername(@RequestParam String username) {
+        var user = users.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Account is not found. Please, check requisites!!!!!!!!!"
+                ));
+        return ResponseEntity.of(Optional.of(user));
+
+    }
 }
