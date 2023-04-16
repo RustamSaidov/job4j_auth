@@ -19,12 +19,14 @@ public class PersonDetailsServiceImpl implements UserDetailsService {
     public PersonDetailsServiceImpl(PersonRepository persons) {
         this.persons = persons;
     }
+/*
+    private final HibPersonRepository persons;
 
-//    private final HibPersonRepository persons;
-//
-//    public PersonDetailsServiceImpl(HibPersonRepository persons) {
-//        this.persons = persons;
-//    }
+    public PersonDetailsServiceImpl(HibPersonRepository persons) {
+        this.persons = persons;
+    }
+
+ */
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
