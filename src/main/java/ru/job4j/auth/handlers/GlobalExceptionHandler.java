@@ -1,4 +1,4 @@
-package ru.job4j.url.handlers;
+package ru.job4j.auth.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
