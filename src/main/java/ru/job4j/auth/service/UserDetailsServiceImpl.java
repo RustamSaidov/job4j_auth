@@ -1,5 +1,7 @@
 package ru.job4j.auth.service;
 
+import lombok.AllArgsConstructor;
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,33 +10,22 @@ import org.springframework.stereotype.Service;
 import ru.job4j.auth.model.Person;
 import ru.job4j.auth.repository.PersonRepository;
 
-import java.util.Optional;
-
 import static java.util.Collections.emptyList;
 
 @Service
-public class PersonDetailsServiceImpl implements UserDetailsService {
-    private PersonRepository persons;
+public class UserDetailsServiceImpl implements UserDetailsService {
+    private PersonRepository users;
 
-    public PersonDetailsServiceImpl(PersonRepository persons) {
-        this.persons = persons;
+    public UserDetailsServiceImpl(PersonRepository users) {
+        this.users = users;
     }
-/*
-    private final HibPersonRepository persons;
-
-    public PersonDetailsServiceImpl(HibPersonRepository persons) {
-        this.persons = persons;
-    }
-
- */
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Person> person = persons.findByUsername(username);
-        System.out.println("PERSON FROM PersonDetailsServiceImpl:" + person);
-        if (person.isEmpty()) {
+        Person user = users.findByUsername(username).get();
+        if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new User(person.get().getUsername(), person.get().getPassword(), emptyList());
+        return new User(user.getUsername(), user.getPassword(), emptyList());
     }
 }

@@ -1,7 +1,6 @@
 CREATE TABLE persons
-(
-id serial primary key,
-    username     varchar   not null unique ,
-    surname     varchar        not null,
-    password varchar        not null
+    id serial primary key not null,
+    username varchar(2000),
+    password varchar(2000)
 );
+
